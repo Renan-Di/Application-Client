@@ -1,0 +1,18 @@
+version: '3'
+
+services: 
+    ServerLocal:
+        image: jboss-7.3:latest
+        volumes: 
+            # Mount the root folder that contains .git
+            - .:/workspace:cached
+        command: /bin/sh -c "while sleep 1000; do :; done"
+        depends_on: 
+            - ServerRemote
+
+    ServerRemote:
+        image: jboss-7.3:latest
+        volumes: 
+            # Mount the root folder that contains .git
+            - .:/workspace:cached
+        command: /bin/sh -c "while sleep 1000; do :; done"
