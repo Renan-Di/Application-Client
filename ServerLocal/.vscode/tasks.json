@@ -1,0 +1,96 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Debug - client with rebuild",
+            "type": "shell",
+            "command": "/jboss-eap-7.3/bin/appclient.sh",
+            "args": [
+                "appclient/ear/target/ear-1.0-SNAPSHOT.ear#client.jar",
+                "Hello",
+                "Renan"
+            ],
+            "isBackground": true,
+            "options": {
+                "env": {
+                    "JAVA_OPTS": "-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=y"
+                }
+            },
+            "problemMatcher": [
+                {
+                    "pattern": [
+                      {
+                        "regexp": ".",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                      }
+                    ],
+                    "background": {
+                      "beginsPattern": ".",
+                      "endsPattern": ".",
+                    }
+                }
+            ],
+            "dependsOn" : [
+                "Client: package"
+            ]
+        },
+        {
+            "label": "Debug - client",
+            "type": "shell",
+            "command": "/jboss-eap-7.3/bin/appclient.sh",
+            "args": [
+                "appclient/ear/target/ear-1.0-SNAPSHOT.ear#client.jar",
+                "Hello",
+                "Renan"
+            ],
+            "isBackground": true,
+            "options": {
+                "env": {
+                    "JAVA_OPTS": "-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=y"
+                }
+            },
+            "problemMatcher": [
+                {
+                    "pattern": [
+                      {
+                        "regexp": ".",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                      }
+                    ],
+                    "background": {
+                      "beginsPattern": ".",
+                      "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Client: package",
+            "type" : "shell",
+            "command" : "mvn -B clean package -f ${cwd}/appclient/pom.xml",
+            "group": "build"
+        },
+        {
+            "label": "Create User",
+            "type": "shell",
+            "command" : "/jboss-eap-7.3/bin/add-user.sh",
+            "options": {
+                "shell": {"executable": ""}
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        }
+    ]
+}
